@@ -838,12 +838,16 @@ bool AsmAnalyzer::validateInstructions(evmasm::Instruction _instr, SourceLocatio
 		errorForVM(4948_error, "only available for Osaka-compatible");
 	else if (_instr == evmasm::Instruction::APPROVE && !m_evmVersion.hasFrameTransaction())
 		errorForVM(8150_error, "only available for Osaka-compatible");
-	else if (_instr == evmasm::Instruction::TXPARAMLOAD && !m_evmVersion.hasFrameTransaction())
+	else if (_instr == evmasm::Instruction::TXPARAM && !m_evmVersion.hasFrameTransaction())
 		errorForVM(8151_error, "only available for Osaka-compatible");
-	else if (_instr == evmasm::Instruction::TXPARAMSIZE && !m_evmVersion.hasFrameTransaction())
+	else if (_instr == evmasm::Instruction::FRAMEDATALOAD && !m_evmVersion.hasFrameTransaction())
 		errorForVM(8152_error, "only available for Osaka-compatible");
-	else if (_instr == evmasm::Instruction::TXPARAMCOPY && !m_evmVersion.hasFrameTransaction())
+	else if (_instr == evmasm::Instruction::FRAMEDATACOPY && !m_evmVersion.hasFrameTransaction())
 		errorForVM(8153_error, "only available for Osaka-compatible");
+	else if (_instr == evmasm::Instruction::FRAMEPARAM && !m_evmVersion.hasFrameTransaction())
+		errorForVM(8154_error, "only available for Osaka-compatible");
+	else if (_instr == evmasm::Instruction::SIGPARAM && !m_evmVersion.hasFrameTransaction())
+		errorForVM(8155_error, "only available for Osaka-compatible");
 	else if (_instr == evmasm::Instruction::CREATE2 && !m_evmVersion.hasCreate2())
 		errorForVM(6166_error, "only available for Constantinople-compatible");
 	else if (_instr == evmasm::Instruction::EXTCODEHASH && !m_evmVersion.hasExtCodeHash())

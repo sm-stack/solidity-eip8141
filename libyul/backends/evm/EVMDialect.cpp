@@ -139,15 +139,17 @@ std::set<std::string, std::less<>> createReservedIdentifiers(langutil::EVMVersio
 		return _instr == evmasm::Instruction::CLZ && !_evmVersion.hasCLZ();
 	};
 
-	// TODO remove this in 0.9.0. We allow creating functions or identifiers in Yul with the names
-	// approve, txparamload, txparamsize or txparamcopy for VMs before osaka.
+	// TODO remove this in 0.9.0. We allow creating functions or identifiers in Yul with frame
+	// transaction instruction names for VMs before osaka.
 	auto frameTransactionException = [&](evmasm::Instruction _instr) -> bool
 	{
 		return !_evmVersion.hasFrameTransaction() &&
 			(_instr == evmasm::Instruction::APPROVE ||
-			 _instr == evmasm::Instruction::TXPARAMLOAD ||
-			 _instr == evmasm::Instruction::TXPARAMSIZE ||
-			 _instr == evmasm::Instruction::TXPARAMCOPY);
+			 _instr == evmasm::Instruction::TXPARAM ||
+			 _instr == evmasm::Instruction::FRAMEDATALOAD ||
+			 _instr == evmasm::Instruction::FRAMEDATACOPY ||
+			 _instr == evmasm::Instruction::FRAMEPARAM ||
+			 _instr == evmasm::Instruction::SIGPARAM);
 	};
 
 	auto eofIdentifiersException = [&](evmasm::Instruction _instr) -> bool

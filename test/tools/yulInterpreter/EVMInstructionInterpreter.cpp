@@ -400,26 +400,30 @@ u256 EVMInstructionInterpreter::eval(
 		logTrace(_instruction, arg, m_state.returndata);
 		BOOST_THROW_EXCEPTION(ExplicitlyTerminatedWithReturn());
 	}
-	case Instruction::TXPARAMLOAD:
+	case Instruction::TXPARAM:
 		logTrace(_instruction, arg);
-		return u256(keccak256(h256(arg[0]))) ^ arg[2];
-	case Instruction::TXPARAMSIZE:
+		return u256(keccak256(h256(arg[0])));
+	case Instruction::FRAMEDATALOAD:
 		logTrace(_instruction, arg);
-		return u256(keccak256(h256(arg[0]))) & 0xfff;
-	case Instruction::TXPARAMCOPY:
+		return u256(keccak256(h256(arg[1]))) ^ arg[0];
+	case Instruction::FRAMEDATACOPY:
 	{
 		// Mock: fill destination memory with deterministic data
-		bytes mockData(size_t(arg[4]), 0);
+		bytes mockData(size_t(arg[2]), 0);
 		for (size_t i = 0; i < mockData.size(); ++i)
-			mockData[i] = uint8_t(i);
-		if (accessMemory(arg[2], arg[4]))
+			mockData[i] = uint8_t(i + size_t(arg[3]));
+		if (accessMemory(arg[0], arg[2]))
 			copyZeroExtended(
 				m_state.memory, mockData,
-				size_t(arg[2]), size_t(arg[3]), size_t(arg[4])
+				size_t(arg[0]), size_t(arg[1]), size_t(arg[2])
 			);
 		logTrace(_instruction, arg);
 		return 0;
 	}
+	case Instruction::FRAMEPARAM:
+	case Instruction::SIGPARAM:
+		logTrace(_instruction, arg);
+		return u256(keccak256(h256(arg[1]))) ^ arg[0];
 	case Instruction::REVERT:
 		accessMemory(arg[0], arg[1]);
 		logTrace(_instruction, arg);

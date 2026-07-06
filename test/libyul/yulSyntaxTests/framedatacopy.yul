@@ -1,5 +1,5 @@
 {
-    let x := txparamsize(0, 0)
+    framedatacopy(0, 0, 0x20, 0)
 }
 
 // ====

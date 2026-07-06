@@ -123,7 +123,7 @@ std::vector<SemanticInformation::Operation> SemanticInformation::readWriteOperat
 		op.lengthParameter = 2;
 		return {op};
 	}
-	case Instruction::TXPARAMCOPY:
+	case Instruction::FRAMEDATACOPY:
 	{
 		assertThrow(memory(_instruction) == Effect::Write, OptimizerException, "");
 		assertThrow(storage(_instruction) == Effect::None, OptimizerException, "");
@@ -131,8 +131,8 @@ std::vector<SemanticInformation::Operation> SemanticInformation::readWriteOperat
 		Operation op;
 		op.effect = memory(_instruction);
 		op.location = Location::Memory;
-		op.startParameter = 2;
-		op.lengthParameter = 4;
+		op.startParameter = 0;
+		op.lengthParameter = 2;
 		return {op};
 	}
 	case Instruction::MCOPY:
@@ -515,7 +515,7 @@ SemanticInformation::Effect SemanticInformation::memory(Instruction _instruction
 	case Instruction::EXTCODECOPY:
 	case Instruction::RETURNDATACOPY:
 	case Instruction::MCOPY:
-	case Instruction::TXPARAMCOPY:
+	case Instruction::FRAMEDATACOPY:
 	case Instruction::MSTORE:
 	case Instruction::MSTORE8:
 	case Instruction::CALL:

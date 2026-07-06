@@ -170,6 +170,7 @@ void UnusedStoreEliminator::visit(Statement const& _statement)
 		*instruction == Instruction::MSTORE8;
 	bool isCandidateForRemoval =
 		*instruction != Instruction::MCOPY &&
+		*instruction != Instruction::FRAMEDATACOPY &&
 		SemanticInformation::otherState(*instruction) != SemanticInformation::Write && (
 			SemanticInformation::storage(*instruction) == SemanticInformation::Write ||
 			(!m_ignoreMemory && SemanticInformation::memory(*instruction) == SemanticInformation::Write)

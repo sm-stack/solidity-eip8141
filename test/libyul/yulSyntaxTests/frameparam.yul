@@ -1,5 +1,5 @@
 {
-    let x := txparamload(0, 0, 0)
+    let x := frameparam(0, 0)
 }
 
 // ====

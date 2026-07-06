@@ -82,6 +82,21 @@ BuiltinFunctionForEVM instructionBuiltin(evmasm::Instruction const& _instruction
 	return f;
 }
 
+BuiltinFunctionForEVM indexFirstFrameBuiltin(evmasm::Instruction const& _instruction, langutil::EVMVersion const& _evmVersion)
+{
+	BuiltinFunctionForEVM f = instructionBuiltin(_instruction, _evmVersion);
+	f.generateCode = [_instruction](
+		FunctionCall const&,
+		AbstractAssembly& _assembly,
+		BuiltinContext&
+	)
+	{
+		_assembly.appendInstruction(evmasm::Instruction::SWAP1);
+		_assembly.appendInstruction(_instruction);
+	};
+	return f;
+}
+
 BuiltinFunctionForEVM linkersymbolBuiltin()
 {
 	return createFunction(
@@ -340,11 +355,16 @@ EVMBuiltins::EVMBuiltins()
 		// these are replaced by 'proper' builtin functions
 		if (
 			opcode == evmasm::Instruction::DATALOADN ||
+			opcode == evmasm::Instruction::FRAMEPARAM ||
 			opcode == evmasm::Instruction::EOFCREATE ||
-			opcode == evmasm::Instruction::RETURNCONTRACT
+			opcode == evmasm::Instruction::RETURNCONTRACT ||
+			opcode == evmasm::Instruction::SIGPARAM
 		)
 			std::get<0>(m_scopesAndFunctions.back()) |= replaced;
 	}
+
+	m_scopesAndFunctions.emplace_back(instruction, indexFirstFrameBuiltin(evmasm::Instruction::FRAMEPARAM, langutil::EVMVersion::current()));
+	m_scopesAndFunctions.emplace_back(instruction, indexFirstFrameBuiltin(evmasm::Instruction::SIGPARAM, langutil::EVMVersion::current()));
 
 	m_scopesAndFunctions.emplace_back(objectAccess, linkersymbolBuiltin());
 	m_scopesAndFunctions.emplace_back(objectAccess, memoryguardBuiltin());
