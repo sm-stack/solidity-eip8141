@@ -358,13 +358,15 @@ EVMBuiltins::EVMBuiltins()
 			opcode == evmasm::Instruction::FRAMEPARAM ||
 			opcode == evmasm::Instruction::EOFCREATE ||
 			opcode == evmasm::Instruction::RETURNCONTRACT ||
-			opcode == evmasm::Instruction::SIGPARAM
+			opcode == evmasm::Instruction::SIGPARAM ||
+			opcode == evmasm::Instruction::RECENTROOTREFLOAD
 		)
 			std::get<0>(m_scopesAndFunctions.back()) |= replaced;
 	}
 
 	m_scopesAndFunctions.emplace_back(instruction, indexFirstFrameBuiltin(evmasm::Instruction::FRAMEPARAM, langutil::EVMVersion::current()));
 	m_scopesAndFunctions.emplace_back(instruction, indexFirstFrameBuiltin(evmasm::Instruction::SIGPARAM, langutil::EVMVersion::current()));
+	m_scopesAndFunctions.emplace_back(instruction, indexFirstFrameBuiltin(evmasm::Instruction::RECENTROOTREFLOAD, langutil::EVMVersion::current()));
 
 	m_scopesAndFunctions.emplace_back(objectAccess, linkersymbolBuiltin());
 	m_scopesAndFunctions.emplace_back(objectAccess, memoryguardBuiltin());

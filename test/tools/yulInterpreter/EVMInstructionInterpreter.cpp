@@ -422,6 +422,7 @@ u256 EVMInstructionInterpreter::eval(
 	}
 	case Instruction::FRAMEPARAM:
 	case Instruction::SIGPARAM:
+	case Instruction::RECENTROOTREFLOAD:
 		logTrace(_instruction, arg);
 		return u256(keccak256(h256(arg[1]))) ^ arg[0];
 	case Instruction::REVERT:

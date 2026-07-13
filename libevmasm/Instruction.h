@@ -191,6 +191,7 @@ enum class Instruction: uint8_t
 	FRAMEDATACOPY,            ///< copy frame calldata to memory (EIP-8141)
 	FRAMEPARAM,               ///< load frame parameter (EIP-8141)
 	SIGPARAM,                 ///< load transaction signature parameter (EIP-8141)
+	RECENTROOTREFLOAD,        ///< load recent-root reference field (EIP-8272)
 
 	DATALOADN = 0xd1,         ///< load data from EOF data section
 

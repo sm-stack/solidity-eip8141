@@ -22,6 +22,11 @@
         function sigparam() {}
         sigparam()
     }
+
+    {
+        function recentrootrefload() {}
+        recentrootrefload()
+    }
 }
 
 // ====

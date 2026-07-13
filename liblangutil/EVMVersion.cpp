@@ -50,6 +50,7 @@ bool EVMVersion::hasOpcode(Instruction _opcode, std::optional<uint8_t> _eofVersi
 	case Instruction::FRAMEDATACOPY:
 	case Instruction::FRAMEPARAM:
 	case Instruction::SIGPARAM:
+	case Instruction::RECENTROOTREFLOAD:
 		return hasFrameTransaction();
 	case Instruction::CREATE2:
 		return !_eofVersion.has_value() && hasCreate2();
