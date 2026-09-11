@@ -358,15 +358,18 @@ EVMBuiltins::EVMBuiltins()
 			opcode == evmasm::Instruction::FRAMEPARAM ||
 			opcode == evmasm::Instruction::EOFCREATE ||
 			opcode == evmasm::Instruction::RETURNCONTRACT ||
-			opcode == evmasm::Instruction::SIGPARAM ||
-			opcode == evmasm::Instruction::RECENTROOTREFLOAD
+			opcode == evmasm::Instruction::SIGPARAM
 		)
 			std::get<0>(m_scopesAndFunctions.back()) |= replaced;
 	}
 
+	// FRAMEPARAM and SIGPARAM take the index on top of the stack, so the Yul
+	// builtins swap to keep the (selector, index) argument order.
+	// RECENTROOTREFLOAD takes the field selector on top of the stack (geth
+	// eip8141-benchmark, opRecentRootRefLoad), so the plain instruction builtin
+	// already yields recentrootrefload(field, index).
 	m_scopesAndFunctions.emplace_back(instruction, indexFirstFrameBuiltin(evmasm::Instruction::FRAMEPARAM, langutil::EVMVersion::current()));
 	m_scopesAndFunctions.emplace_back(instruction, indexFirstFrameBuiltin(evmasm::Instruction::SIGPARAM, langutil::EVMVersion::current()));
-	m_scopesAndFunctions.emplace_back(instruction, indexFirstFrameBuiltin(evmasm::Instruction::RECENTROOTREFLOAD, langutil::EVMVersion::current()));
 
 	m_scopesAndFunctions.emplace_back(objectAccess, linkersymbolBuiltin());
 	m_scopesAndFunctions.emplace_back(objectAccess, memoryguardBuiltin());
