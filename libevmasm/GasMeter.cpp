@@ -109,6 +109,7 @@ GasMeter::GasConsumption GasMeter::estimateMax(AssemblyItem const& _item, bool _
 		case Instruction::CODECOPY:
 		case Instruction::RETURNDATACOPY:
 		case Instruction::FRAMEDATACOPY:
+		case Instruction::SIGDATACOPY:
 			gas = runGas(_item.instruction(), m_evmVersion);
 			gas += memoryGas(0, -2);
 			gas += wordGas(GasCosts::copyGas, m_state->relativeStackElement(-2));

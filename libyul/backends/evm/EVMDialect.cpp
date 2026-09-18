@@ -150,6 +150,7 @@ std::set<std::string, std::less<>> createReservedIdentifiers(langutil::EVMVersio
 			 _instr == evmasm::Instruction::FRAMEDATACOPY ||
 			 _instr == evmasm::Instruction::FRAMEPARAM ||
 			 _instr == evmasm::Instruction::SIGPARAM ||
+			 _instr == evmasm::Instruction::SIGDATACOPY ||
 			 _instr == evmasm::Instruction::RECENTROOTREFLOAD);
 	};
 

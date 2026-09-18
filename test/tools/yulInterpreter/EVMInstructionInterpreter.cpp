@@ -407,6 +407,7 @@ u256 EVMInstructionInterpreter::eval(
 		logTrace(_instruction, arg);
 		return u256(keccak256(h256(arg[1]))) ^ arg[0];
 	case Instruction::FRAMEDATACOPY:
+	case Instruction::SIGDATACOPY:
 	{
 		// Mock: fill destination memory with deterministic data
 		bytes mockData(size_t(arg[2]), 0);

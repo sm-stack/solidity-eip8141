@@ -124,6 +124,7 @@ std::vector<SemanticInformation::Operation> SemanticInformation::readWriteOperat
 		return {op};
 	}
 	case Instruction::FRAMEDATACOPY:
+	case Instruction::SIGDATACOPY:
 	{
 		assertThrow(memory(_instruction) == Effect::Write, OptimizerException, "");
 		assertThrow(storage(_instruction) == Effect::None, OptimizerException, "");
@@ -516,6 +517,7 @@ SemanticInformation::Effect SemanticInformation::memory(Instruction _instruction
 	case Instruction::RETURNDATACOPY:
 	case Instruction::MCOPY:
 	case Instruction::FRAMEDATACOPY:
+	case Instruction::SIGDATACOPY:
 	case Instruction::MSTORE:
 	case Instruction::MSTORE8:
 	case Instruction::CALL:

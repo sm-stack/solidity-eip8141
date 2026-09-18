@@ -848,6 +848,8 @@ bool AsmAnalyzer::validateInstructions(evmasm::Instruction _instr, SourceLocatio
 		errorForVM(8154_error, "only available for Osaka-compatible");
 	else if (_instr == evmasm::Instruction::SIGPARAM && !m_evmVersion.hasFrameTransaction())
 		errorForVM(8155_error, "only available for Osaka-compatible");
+	else if (_instr == evmasm::Instruction::SIGDATACOPY && !m_evmVersion.hasFrameTransaction())
+		errorForVM(8156_error, "only available for Osaka-compatible");
 	else if (_instr == evmasm::Instruction::RECENTROOTREFLOAD && !m_evmVersion.hasFrameTransaction())
 		errorForVM(8272_error, "only available for Osaka-compatible");
 	else if (_instr == evmasm::Instruction::CREATE2 && !m_evmVersion.hasCreate2())
